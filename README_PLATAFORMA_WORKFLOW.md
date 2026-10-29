@@ -4,16 +4,16 @@ Este documento detalha o funcionamento, links de rede local, fluxo de e-mails au
 
 ---
 
-## 🌐 1. Links de Acesso na Empresa (Rede Local / Intranet)
+## 🌐 1. Links Oficiais Permanentes (Nuvem 24/7 — Computador, Celular e Qualquer Rede)
 
-O servidor está configurado em `0.0.0.0:3050`, permitindo acesso instantâneo por qualquer computador, notebook ou smartphone conectado à rede da empresa:
+A plataforma está publicada de forma definitiva no **GitHub Pages** integrada em tempo real ao **Google Apps Script (Planilha Google + Disparo de E-mails Automático)**, funcionando 24 horas por dia mesmo com o computador desligado:
 
-| Recurso | Endereço de Acesso | Finalidade |
+| Recurso | Endereço Oficial Permanente (Nuvem 24/7) | Finalidade |
 | :--- | :--- | :--- |
-| **Portal de Solicitações (Geral da Empresa)** | [http://192.168.2.178:3050/solicitar.html](http://192.168.2.178:3050/solicitar.html) | Formulário simplificado e direto para qualquer colaborador abrir demandas para o **Darlan**. |
-| **Painel Digital Kanban & Gestão** | [http://192.168.2.178:3050](http://192.168.2.178:3050) | Gestão de cartões por arrasto (Drag & Drop), Fila Gerencial, Modo Slides e Indicadores. |
-| **Apresentação em Slides (16:9)** | [http://192.168.2.178:3050?tab=slides](http://192.168.2.178:3050?tab=slides) | Projeção em tela cheia para comitês, alinhamentos semanais e TVs industriais. |
-| **Guia de Treinamento Interativo** | [http://192.168.2.178:3050/treinamento.html](http://192.168.2.178:3050/treinamento.html) | Apresentação em 7 slides ensinando a equipe a operar o fluxo Kanban e cadastrar demandas. |
+| **Portal de Solicitações (Geral da Empresa)** | [https://david13079.github.io/simpro-erp/solicitar.html](https://david13079.github.io/simpro-erp/solicitar.html) | Formulário simplificado e direto para qualquer colaborador abrir demandas para o **Darlan**. |
+| **Guia de Treinamento Interativo** | [https://david13079.github.io/simpro-erp/treinamento.html](https://david13079.github.io/simpro-erp/treinamento.html) | Apresentação em 7 slides ensinando a equipe a operar o fluxo Kanban e cadastrar demandas. |
+| **Painel Digital Kanban & Gestão** | [https://david13079.github.io/simpro-erp/](https://david13079.github.io/simpro-erp/) | Gestão de cartões por arrasto (Drag & Drop), Fila Gerencial, Modo Slides e Indicadores. |
+| **Apresentação em Slides (16:9)** | [https://david13079.github.io/simpro-erp/?tab=slides](https://david13079.github.io/simpro-erp/?tab=slides) | Projeção em tela cheia para comitês, alinhamentos semanais e TVs industriais. |
 
 ---
 
