@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Treinamento & Guia de Uso | Painel de Ações ERP Sênior</title>
+  <meta name="description" content="Apresentação executiva e direta para capacitação dos usuários na utilização do Painel de Ações ERP Sênior da Simpro.">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <style>
+    :root {
+      --senior-green: #00A859;
+      --senior-green-hover: #008F4C;
+      --senior-green-subtle: rgba(0, 168, 89, 0.08);
+      --senior-green-border: rgba(0, 168, 89, 0.3);
+      
+      --bg-base: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-muted: #F1F5F9;
+      --border-subtle: #E2E8F0;
+      --border-strong: #CBD5E1;
+      
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      
+      --crit-red: #DC2626;
+      --crit-orange: #EA580C;
+      --crit-blue: #0284C7;
+      
+      --font-main: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      padding: 1rem;
+    }
+
+    /* BARRA SUPERIOR DE CONTROLES */
+    .deck-topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .topbar-logo {
+      height: 28px;
+      width: auto;
+    }
+
+    .topbar-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .topbar-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      background: var(--senior-green);
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .deck-nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-nav {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      font-size: 0.825rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-nav:hover {
+      background: var(--bg-muted);
+      border-color: var(--text-muted);
+    }
+
+    .btn-primary-senior {
+      background: var(--senior-green);
+      color: #fff;
+      border-color: var(--senior-green);
+    }
+
+    .btn-primary-senior:hover {
+      background: var(--senior-green-hover);
+      border-color: var(--senior-green-hover);
+      color: #fff;
+    }
+
+    .slide-counter {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      padding: 0 0.5rem;
+    }
+
+    /* CONTAINER DO SLIDE (RATIO 16:9) */
+    .deck-viewport {
+      width: 100%;
+      max-width: 1180px;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-surface);
+      border: 2px solid var(--senior-green);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      margin-top: 4rem;
+      margin-bottom: 2rem;
+    }
+
+    .training-slide {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      padding: 2.2rem 2.6rem;
+      animation: slideIn 0.25s ease-out;
+    }
+
+    .training-slide.active-slide {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CABEÇALHO DO SLIDE */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1.5px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .slide-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      color: var(--senior-green);
+    }
+
+    .slide-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 0.2rem;
+    }
+
+    .slide-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    /* CORPO DO SLIDE */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      min-height: 0;
+    }
+
+    /* CARDS EM GRID */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      flex: 1;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      flex: 1;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .feature-card {
+      background: var(--bg-muted);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      position: relative;
+    }
+
+    .feature-card.highlight {
+      background: var(--senior-green-subtle);
+      border-color: var(--senior-green-border);
+    }
+
+    .feature-card.alert-card {
+      background: #FEF2F2;
+      border-color: #FECACA;
+    }
+
+    .card-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--senior-green);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .card-desc {
+      font-size: 0.825rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      width: fit-content;
+    }
+
+    .pill-backlog { background: #E2E8F0; color: #475569; }
+    .pill-wip { background: #BAE6FD; color: #0284C7; }
+    .pill-done { background: #BBF7D0; color: #00A859; }
+
+    /* CAPA */
+    .cover-slide {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 1.5rem;
+    }
+
+    .cover-logos {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .cover-simpro-logo {
+      height: 48px;
+      width: auto;
+    }
+
+    .cover-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      line-height: 1.15;
+    }
+
+    .cover-title span {
+      color: var(--senior-green);
+    }
+
+    .cover-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      line-height: 1.5;
+    }
+
+    .cover-footer {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    /* RODAPÉ DO SLIDE */
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.75rem;
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* BARRA DE PROGRESSO INFERIOR */
+    .deck-progressbar-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .deck-progressbar {
+      height: 100%;
+      background: var(--senior-green);
+      width: 14.28%;
+      transition: width 0.25s ease;
+    }
+
+    /* MODO IMPRESSÃO / PDF */
+    @media print {
+      body {
+        background: #fff !important;
+        padding: 0 !important;
+      }
+      .deck-topbar {
+        display: none !important;
+      }
+      .deck-viewport {
+        border: none !important;
+        box-shadow: none !important;
+        max-width: none !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+      }
+      .training-slide {
+        display: flex !important;
+        page-break-after: always;
+        height: 100vh;
+      }
+      .deck-progressbar-container {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR DE CONTROLES -->
+  <nav class="deck-topbar">
+    <div class="topbar-brand">
+      <img src="logo-simpro.png" alt="Simpro" class="topbar-logo">
+      <span class="topbar-badge">Sênior ERP</span>
+      <span class="topbar-title">Guia de Treinamento da Plataforma</span>
+    </div>
+
+    <div class="deck-nav-controls">
+      <a href="index.html" class="btn-nav" title="Voltar ao Painel Principal">
+        <span>↩️</span> Voltar ao Painel
+      </a>
+      <button class="btn-nav" id="btn-print" title="Salvar apresentação em PDF / Imprimir">
+        <span>🖨️</span> Salvar em PDF
+      </button>
+      <button class="btn-nav" id="btn-prev" title="Slide Anterior (←)">
+        <span>◀</span> Anterior
+      </button>
+      <span class="slide-counter" id="slide-indicator">1 / 7</span>
+      <button class="btn-nav btn-primary-senior" id="btn-next" title="Próximo Slide (→)">
+        Próximo <span>▶</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- VIEWPORT DO SLIDE (RATIO 16:9) -->
+  <main class="deck-viewport" id="viewport">
+
+    <!-- SLIDE 1: CAPA -->
+    <section class="training-slide cover-slide active-slide" data-index="1">
+      <div class="cover-logos">
+        <img src="logo-simpro.png" alt="Simpro Industrial" class="cover-simpro-logo">
+        <span class="topbar-badge" style="font-size: 0.85rem; padding: 0.3rem 0.8rem;">Sênior Sistemas</span>
+      </div>
+
+      <h1 class="cover-title">
+        Guia de Uso do Painel de Demandas<br>
+        <span>Consultoria ERP Sênior</span>
+      </h1>
+
+      <p class="cover-desc">
+        Apresentação executiva e direta para capacitação da equipe Simpro: como qualquer colaborador pode abrir chamados para o consultor interno <strong>Darlan</strong>, com workflow automático por e-mail para <strong>Ewerton, Angelin e Vilax</strong> e relatório mensal para <strong>Douglas e Federigo</strong>.
+      </p>
+
+      <div style="display: flex; gap: 0.8rem; margin-top: 0.5rem;">
+        <button class="btn-nav btn-primary-senior" onclick="nextSlide()" style="font-size: 0.95rem; padding: 0.6rem 1.4rem;">
+          Começar Treinamento ▶
+        </button>
+      </div>
+
+      <div class="cover-footer">
+        Dica: Utilize as setas <strong>←</strong> e <strong>→</strong> do teclado para navegar entre os slides.
+      </div>
+    </section>
+
+    <!-- SLIDE 2: O FLUXO KANBAN -->
+    <section class="training-slide" data-index="2">
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Conceito & Governança</span>
+          <h2 class="slide-title">1. Como Funciona o Fluxo Operacional (Kanban)</h2>
+          <p class="slide-subtitle">O painel organiza as ações do consultor em um fluxo contínuo e transparente de 3 colunas.</p>
+        </div>
+        <img src="logo-simpro.png" alt="Simpro" class="topbar-logo">
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="feature-card highlight">
+            <span class="badge-pill pill-backlog">1. Entrada Obrigatória</span>
+            <h3 class="card-title">Não iniciado (Backlog)</h3>
+            <p class="card-desc">
+              É onde <strong>todas as novas demandas nascem</strong>. A fila é organizada automaticamente por criticidade e prazos acordados. Nenhuma demanda se perde.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <span class="badge-pill pill-wip">2. Execução Ativa</span>
+            <h3 class="card-title">Em andamento (WIP)</h3>
+            <p class="card-desc">
+              Quando o consultor Darlan inicia a parametrização, ajuste de tela ou rotina, o card é <strong>arrastado para cá</strong>. Demonstra o trabalho que está acontecendo agora.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <span class="badge-pill pill-done">3. Entrega & Validação</span>
+            <h3 class="card-title">Feito (Concluído)</h3>
+            <p class="card-desc">
+              Demandas finalizadas, testadas e homologadas junto à área solicitante. São arrastadas para cá alimentando os indicadores de sucesso.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature-card" style="background: var(--bg-surface); border: 1.5px solid var(--senior-green);">
+          <strong style="color: var(--senior-green); font-size: 0.85rem;">⚡ Regra de Ouro do Kanban:</strong>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem;">
+            Ninguém cria demandas diretamente em <em>"Em andamento"</em> ou <em>"Feito"</em>. Toda necessidade entra no Backlog e progride por arrasto, garantindo rastreabilidade e controle de fila para o consultor.
+          </p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Plataforma Simpro • Consultoria ERP Sênior</span>
+        <span>Slide 2 de 7</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: COMO INSERIR DEMANDAS -->
+    <section class="training-slide" data-index="3">
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Passo a Passo</span>
+          <h2 class="slide-title">2. Como Inserir uma Nova Demanda Real</h2>
+          <p class="slide-subtitle">Basta clicar na aba <strong>"➕ Inserir Demanda"</strong> no topo ou no botão no cabeçalho do Backlog.</p>
+        </div>
+        <img src="logo-simpro.png" alt="Simpro" class="topbar-logo">
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="feature-card">
+            <h3 class="card-title">📋 Informações de Identificação</h3>
+            <ul style="font-size: 0.82rem; color: var(--text-secondary); padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; line-height: 1.4;">
+              <li><strong>Nome da Ação:</strong> Título claro do que deve ser feito (ex: <em>Parametrizar rateio de OS no fiscal</em>).</li>
+              <li><strong>Solicitante:</strong> Seu nome e cargo de quem está demandando.</li>
+              <li><strong>Área / Departamento:</strong> PCP, Produção, Compras, Fiscal, Controladoria, TI...</li>
+              <li><strong>Criticidade:</strong> Crítica (urgente), Alta, Média ou Baixa.</li>
+              <li><strong>Data Início & Data Fim:</strong> O prazo esperado da entrega.</li>
+            </ul>
+          </div>
+
+          <div class="feature-card highlight">
+            <h3 class="card-title">🎯 Os Dois Campos Principais</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.82rem;">
+              <div>
+                <strong style="color: var(--crit-red);">🛑 Qual o problema? (Diagnóstico & Impacto):</strong>
+                <p style="color: var(--text-secondary); margin-top: 0.15rem;">
+                  Explique o gargalo atual no ERP. O que está travando o trabalho da sua equipe hoje?
+                </p>
+              </div>
+              <div>
+                <strong style="color: var(--senior-green);">🎯 O que precisa / queremos que seja feito?:</strong>
+                <p style="color: var(--text-secondary); margin-top: 0.15rem;">
+                  O que você espera que o consultor entregue (nova regra, relatório, ajuste de banco ou tela).
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 0.8rem 1rem; font-size: 0.8rem; color: #166534;">
+          ✓ Ao clicar em <strong>"Salvar e Inserir no Backlog"</strong>, a ação entra instantaneamente no Kanban, na Fila Gerencial e gera o Slide executivo!
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Plataforma Simpro • Consultoria ERP Sênior</span>
+        <span>Slide 3 de 7</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: INTERAÇÃO NO KANBAN -->
+    <section class="training-slide" data-index="4">
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Operação Diária</span>
+          <h2 class="slide-title">3. Interação no Kanban: Arrasto & Gestão de Prazos</h2>
+          <p class="slide-subtitle">Como acompanhar o andamento dos cartões e monitorar os prazos de cada entrega.</p>
+        </div>
+        <img src="logo-simpro.png" alt="Simpro" class="topbar-logo">
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="card-step-num">1</div>
+            <h3 class="card-title">Arrasto (Drag & Drop)</h3>
+            <p class="card-desc">
+              Clique e segure sobre qualquer cartão para arrastá-lo da coluna <strong>Não iniciado</strong> para <strong>Em andamento</strong> ou <strong>Feito</strong>. O status é salvo automaticamente no servidor.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="card-step-num">2</div>
+            <h3 class="card-title">Ficha Rápida do Card</h3>
+            <p class="card-desc">
+              Cada cartão exibe a prioridade colorida, departamento, solicitante e o resumo do problema. Clique em <strong>[🖥️ Ver Slide]</strong> para ver a ficha completa ou em <strong>[✏️]</strong> para editar.
+            </p>
+          </div>
+
+          <div class="feature-card alert-card">
+            <div class="card-step-num" style="background: var(--crit-red);">!</div>
+            <h3 class="card-title" style="color: var(--crit-red);">Alerta de Prazo Vencido</h3>
+            <p class="card-desc">
+              O sistema compara a Data Fim com a data atual. Se o prazo expirar e a demanda não estiver em <em>Feito</em>, o cartão sinaliza <strong>⚠️ Prazo Vencido</strong> em vermelho.
+            </p>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-muted); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.9rem 1.2rem; display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">
+            Precisa alterar detalhes ou reagendar a data fim?
+          </span>
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--senior-green);">
+            Clique no botão de lápis (✏️) no cartão para abrir a edição imediata.
+          </span>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Plataforma Simpro • Consultoria ERP Sênior</span>
+        <span>Slide 4 de 7</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: MODO SLIDES 16:9 -->
+    <section class="training-slide" data-index="5">
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Reuniões & Apresentações</span>
+          <h2 class="slide-title">4. Modo Slides (16:9) para Alinhamento com Gestores</h2>
+          <p class="slide-subtitle">Formato executivo padrão ideal para reuniões semanais, comitês de melhoria e TVs industriais.</p>
+        </div>
+        <img src="logo-simpro.png" alt="Simpro" class="topbar-logo">
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="feature-card">
+            <h3 class="card-title">🖥️ O Frame Corporativo Padronizado</h3>
+            <p class="card-desc">
+              Cada demanda cadastrada gera automaticamente um slide com proporção widescreen de apresentação:
+            </p>
+            <ul style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.3rem;">
+              <li><strong>Topo:</strong> Logo Simpro, badge Sênior e status atual da ação.</li>
+              <li><strong>Nome da Ação:</strong> Título em destaque legível à distância.</li>
+              <li><strong>Grade de Metadados:</strong> Solicitante, Área, Criticidade e Prazos.</li>
+              <li><strong>Bloco da Esquerda:</strong> Diagnóstico e impacto do problema.</li>
+              <li><strong>Bloco da Direita:</strong> Escopo exato e entregáveis do consultor.</li>
+            </ul>
+          </div>
+
+          <div class="feature-card highlight">
+            <h3 class="card-title">🎮 Controles na Reunião</h3>
+            <ul style="font-size: 0.8rem; color: var(--text-secondary); padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; line-height: 1.4;">
+              <li><strong>Teclas ← e → :</strong> Navegue entre os slides sem usar o mouse.</li>
+              <li><strong>Botão Tela Cheia (⛶):</strong> Oculta barras do navegador para projeção limpa em TVs ou salas de reunião.</li>
+              <li><strong>Botão [✏️ Editar Ação]:</strong> Permite atualizar os dados do slide ali mesmo durante o alinhamento.</li>
+              <li><strong>Contador de Slide:</strong> Exibe a posição na fila (ex: <em>Slide 3 de 12</em>).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Plataforma Simpro • Consultoria ERP Sênior</span>
+        <span>Slide 5 de 7</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: FILA GERENCIAL & INDICADORES -->
+    <section class="training-slide" data-index="6">
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Gestão & Auditoria</span>
+          <h2 class="slide-title">5. Fila Gerencial & Indicadores de Desempenho</h2>
+          <p class="slide-subtitle">Visões consolidadas para coordenadores e gestores monitorarem o volume e a evolução do ERP.</p>
+        </div>
+        <img src="logo-simpro.png" alt="Simpro" class="topbar-logo">
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="feature-card">
+            <h3 class="card-title">📋 Visão Fila Gerencial</h3>
+            <p class="card-desc">
+              Uma tabela de alta densidade que organiza automaticamente as prioridades:
+            </p>
+            <ul style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.35rem;">
+              <li><strong>Ordenação por Criticidade:</strong> Demandas Críticas e Altas ficam no topo.</li>
+              <li><strong>Prazos Mais Próximos Primeiro:</strong> Foco nas entregas mais urgentes.</li>
+              <li><strong>Filtros Dinâmicos:</strong> Filtre por departamento (PCP, Fiscal, Compras...) ou status.</li>
+              <li><strong>Busca Rápida:</strong> Digite qualquer palavra-chave para encontrar a ação.</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h3 class="card-title">📊 Visão Indicadores (Analytics)</h3>
+            <p class="card-desc">
+              Gráficos em tempo real calculados diretamente a partir dos dados reais:
+            </p>
+            <ul style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.35rem;">
+              <li><strong>Pipeline de Status:</strong> % concluído vs em andamento vs backlog.</li>
+              <li><strong>Matriz de Criticidade:</strong> Volume de ações críticas e moderadas.</li>
+              <li><strong>Demandas por Área:</strong> Quais setores mais demandam o ERP.</li>
+              <li><strong>Cumprimento de Prazos:</strong> Ações em dia vs em atraso.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-muted); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.8rem 1.2rem; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.825rem; color: var(--text-secondary);">
+            Precisa de um backup ou relatório das ações?
+          </span>
+          <span style="font-size: 0.825rem; font-weight: 700; color: var(--senior-green);">
+            Clique em <strong>[📤 Exportar]</strong> no topo do painel para baixar o arquivo JSON.
+          </span>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Plataforma Simpro • Consultoria ERP Sênior</span>
+        <span>Slide 6 de 7</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: BOAS PRÁTICAS & CONTATO -->
+    <section class="training-slide" data-index="7">
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Governança & Próximos Passos</span>
+          <h2 class="slide-title">6. Resumo das Boas Práticas & Suporte</h2>
+          <p class="slide-subtitle">Recomendações fundamentais para manter a rotina organizada e produtiva.</p>
+        </div>
+        <img src="logo-simpro.png" alt="Simpro" class="topbar-logo">
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-4">
+          <div class="feature-card highlight">
+            <div class="card-step-num">1</div>
+            <h3 class="card-title">Dados Reais</h3>
+            <p class="card-desc">
+              Cadastre exclusivamente demandas reais necessárias para o negócio.
+            </p>
+          </div>
+
+          <div class="feature-card highlight">
+            <div class="card-step-num">2</div>
+            <h3 class="card-title">Diagnóstico Claro</h3>
+            <p class="card-desc">
+              Descreva com precisão o problema no ERP para facilitar a solução do consultor.
+            </p>
+          </div>
+
+          <div class="feature-card highlight">
+            <div class="card-step-num">3</div>
+            <h3 class="card-title">Entrada no Backlog</h3>
+            <p class="card-desc">
+              Respeite o fluxo de entrada. Avance o card para <em>Em andamento</em> apenas ao iniciar.
+            </p>
+          </div>
+
+          <div class="feature-card highlight">
+            <div class="card-step-num">4</div>
+            <h3 class="card-title">Validação & Feito</h3>
+            <p class="card-desc">
+              Teste a entrega no ERP e arraste para <em>Feito</em> para encerrar o ciclo.
+            </p>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-surface); border: 2px solid var(--senior-green); border-radius: 12px; padding: 1.2rem 1.6rem; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-primary);">Pronto para começar?</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">
+              Acesse o painel principal, insira a sua demanda no Backlog e acompanhe as entregas.
+            </p>
+          </div>
+          <a href="index.html" class="btn-nav btn-primary-senior" style="font-size: 0.95rem; padding: 0.65rem 1.4rem;">
+            Acessar o Painel Agora ▶
+          </a>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Atendimento ERP: <strong>Darlan</strong> • Gestão & Workflow: <strong>Ewerton / Angelin / Vilax</strong> | Simpro do Brasil</span>
+        <span>Slide 7 de 7</span>
+      </div>
+    </section>
+
+    <!-- BARRA DE PROGRESSO DO DECK -->
+    <div class="deck-progressbar-container">
+      <div class="deck-progressbar" id="progressbar"></div>
+    </div>
+
+  </main>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 7;
+
+    const slides = document.querySelectorAll('.training-slide');
+    const indicator = document.getElementById('slide-indicator');
+    const progressbar = document.getElementById('progressbar');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnPrint = document.getElementById('btn-print');
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+      currentSlide = index;
+
+      slides.forEach(slide => {
+        const slideIdx = parseInt(slide.dataset.index, 10);
+        slide.classList.toggle('active-slide', slideIdx === currentSlide);
+      });
+
+      indicator.textContent = `${currentSlide} / ${totalSlides}`;
+      progressbar.style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+      btnPrev.disabled = currentSlide === 1;
+      btnNext.textContent = currentSlide === totalSlides ? 'Concluir ✓' : 'Próximo ▶';
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    btnNext.addEventListener('click', nextSlide);
+    btnPrev.addEventListener('click', prevSlide);
+
+    btnPrint.addEventListener('click', () => {
+      window.print();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        showSlide(1);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        showSlide(totalSlides);
+      }
+    });
+
+    // Inicia no slide 1
+    showSlide(1);
+  </script>
+</body>
+</html>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova solicitação de Ação ERP Sênior - Ewerton Darlan | Simpro do Brasil</title>
+  <link rel="icon" type="image/png" href="logo-simpro.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --senior-green: #00A859;
+      --senior-green-hover: #008f4c;
+      --senior-green-light: #e6f7ef;
+      --primary-dark: #0f172a;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --bg-page: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.06), 0 8px 10px -6px rgba(0,0,0,0.04);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation Bar */
+    .header-bar {
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+    }
+
+    .header-logo {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-divider {
+      height: 28px;
+      width: 1px;
+      background-color: var(--border-color);
+    }
+
+    .header-titles h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: -0.3px;
+    }
+
+    .header-titles span {
+      font-size: 11px;
+      color: var(--senior-green);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .header-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background-color: #f1f5f9;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid var(--border-color);
+    }
+
+    .header-nav-btn:hover {
+      background-color: #e2e8f0;
+      color: var(--primary-dark);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 760px;
+      margin: 32px auto 48px;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    /* Card Wrapper */
+    .form-card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .card-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 32px;
+      position: relative;
+    }
+
+    .card-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #00A859 0%, #34d399 100%);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 168, 89, 0.2);
+      border: 1px solid #00A859;
+      color: #86efac;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: #94a3b8;
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    .consultant-tag {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .consultant-tag strong {
+      color: #38bdf8;
+    }
+
+    /* Form Body */
+    .form-body {
+      padding: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+
+    .form-label span.req {
+      color: #ef4444;
+      margin-left: 2px;
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-main);
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--senior-green);
+      box-shadow: 0 0 0 3px rgba(0, 168, 89, 0.15);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 100px;
+      line-height: 1.5;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .card-hero {
+        padding: 24px 20px;
+      }
+      .form-body {
+        padding: 24px 20px;
+      }
+    }
+
+    /* Radio Cards for Criticidade */
+    .criticidade-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .criticidade-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .crit-card {
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+
+    .crit-card:hover {
+      border-color: #94a3b8;
+      background-color: #f8fafc;
+    }
+
+    .crit-card input[type="radio"] {
+      display: none;
+    }
+
+    .crit-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-bottom: 6px;
+    }
+
+    .crit-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .crit-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.2;
+    }
+
+    .crit-card.selected-Baixa {
+      border-color: #16a34a;
+      background-color: #f0fdf4;
+    }
+    .crit-card.selected-Baixa .crit-name { color: #166534; }
+
+    .crit-card.selected-Média {
+      border-color: #d97706;
+      background-color: #fffbeb;
+    }
+    .crit-card.selected-Média .crit-name { color: #92400e; }
+
+    .crit-card.selected-Alta {
+      border-color: #ea580c;
+      background-color: #fff7ed;
+    }
+    .crit-card.selected-Alta .crit-name { color: #9a3412; }
+
+    .crit-card.selected-Crítica {
+      border-color: #dc2626;
+      background-color: #fef2f2;
+    }
+    .crit-card.selected-Crítica .crit-name { color: #991b1b; }
+
+    /* Workflow Alert Box */
+    .workflow-info {
+      background-color: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .workflow-info-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .workflow-info-text {
+      font-size: 12px;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .workflow-info-text strong {
+      color: var(--primary-dark);
+    }
+
+    /* Action Buttons */
+    .btn-submit {
+      width: 100%;
+      padding: 16px 24px;
+      background-color: var(--senior-green);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 168, 89, 0.25);
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background-color: var(--senior-green-hover);
+      box-shadow: 0 6px 16px rgba(0, 168, 89, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Modal de Sucesso */
+    .success-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .success-modal {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 540px;
+      width: 100%;
+      padding: 36px 32px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .success-icon-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: var(--senior-green);
+      font-size: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      border: 2px solid #86efac;
+    }
+
+    .success-modal h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .success-modal p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .protocol-box {
+      background-color: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .protocol-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    .protocol-code {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--senior-green);
+      font-family: monospace;
+    }
+
+    .success-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-new {
+      padding: 12px 20px;
+      background-color: var(--senior-green);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-board {
+      padding: 12px 20px;
+      background-color: #f1f5f9;
+      color: #334155;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      color: #94a3b8;
+      border-top: 1px solid var(--border-color);
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGAÇÃO -->
+  <header class="header-bar">
+    <a href="index.html" class="header-brand">
+      <img src="logo-simpro.png" alt="Simpro do Brasil" class="header-logo">
+      <div class="brand-divider"></div>
+      <div class="header-titles">
+        <span>Portal de Solicitações ERP</span>
+        <h1>Simpro do Brasil • Sênior</h1>
+      </div>
+    </a>
+    <a href="index.html" class="header-nav-btn">
+      📊 Ir para o Painel Kanban
+    </a>
+  </header>
+
+  <!-- FORMULÁRIO PRINCIPAL -->
+  <main class="container">
+    <div class="form-card">
+      
+      <!-- HERO -->
+      <div class="card-hero">
+        <div class="hero-badge">
+          ⚡ Acesso Geral • Intranet Simpro
+        </div>
+        <h2 class="hero-title">Nova solicitação de Ação ERP Sênior - Ewerton Darlan</h2>
+        <p class="hero-desc">
+          Abra chamados para ajustes, relatórios, melhorias, correções de processos ou dúvidas no sistema ERP Sênior. 
+          Sua solicitação entrará automaticamente no Backlog para atendimento técnico.
+        </p>
+        <div class="consultant-tag">
+          <span>👨‍💻 Consultor Responsável pelo Atendimento:</span>
+          <strong>Ewerton / Darlan</strong>
+        </div>
+      </div>
+
+      <!-- FORMULÁRIO -->
+      <form id="formSolicitacao" class="form-body" onsubmit="enviarSolicitacao(event)">
+        
+        <!-- LINHA 1: SOLICITANTE E ÁREA -->
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="solicitante">
+              Seu Nome Completo (Solicitante)<span class="req">*</span>
+            </label>
+            <input type="text" id="solicitante" class="form-control" placeholder="Ex: Flávia, David, Alair..." required autofocus>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="area">
+              Sua Área / Departamento<span class="req">*</span>
+            </label>
+            <select id="area" class="form-control" required onchange="verificarOutraArea(this)">
+              <option value="">Selecione seu departamento...</option>
+              <option value="CONSULTIVO">Consultivo</option>
+              <option value="Financeiro">Financeiro</option>
+              <option value="Compras">Compras / Suprimentos</option>
+              <option value="Faturamento">Faturamento / Fiscal</option>
+              <option value="Produção">Produção</option>
+              <option value="PCP">PCP / Planejamento</option>
+              <option value="Almoxarifado">Almoxarifado / Estoque</option>
+              <option value="Qualidade">Qualidade</option>
+              <option value="Comercial">Comercial / Vendas</option>
+              <option value="RH / DP">Recursos Humanos / DP</option>
+              <option value="TI">TI / Sistemas</option>
+              <option value="Outro">Outro (especificar)</option>
+            </select>
+            <input type="text" id="outraArea" class="form-control" placeholder="Especifique seu departamento" style="display:none; margin-top:8px;">
+          </div>
+        </div>
+
+        <!-- LINHA 2: TÍTULO DA AÇÃO -->
+        <div class="form-group">
+          <label class="form-label" for="nome">
+            Título / Resumo da Ação Solicitada<span class="req">*</span>
+          </label>
+          <span class="form-hint">Dê um título direto que resuma sua necessidade ou dúvida no ERP</span>
+          <input type="text" id="nome" class="form-control" placeholder="Ex: Amarrar conta financeira no serviço consultivo" required>
+        </div>
+
+        <!-- LINHA 3: CRITICIDADE -->
+        <div class="form-group">
+          <label class="form-label">
+            Criticidade / Prioridade da Demanda<span class="req">*</span>
+          </label>
+          <div class="criticidade-grid">
+            <label class="crit-card" id="card-Baixa" onclick="selecionarCriticidade('Baixa')">
+              <input type="radio" name="criticidade" value="Baixa">
+              <span class="crit-dot" style="background:#16a34a;"></span>
+              <span class="crit-name">Baixa</span>
+              <span class="crit-sub">Dúvida / melhoria</span>
+            </label>
+
+            <label class="crit-card selected-Média" id="card-Média" onclick="selecionarCriticidade('Média')">
+              <input type="radio" name="criticidade" value="Média" checked>
+              <span class="crit-dot" style="background:#d97706;"></span>
+              <span class="crit-name">Média</span>
+              <span class="crit-sub">Ajuste operacional</span>
+            </label>
+
+            <label class="crit-card" id="card-Alta" onclick="selecionarCriticidade('Alta')">
+              <input type="radio" name="criticidade" value="Alta">
+              <span class="crit-dot" style="background:#ea580c;"></span>
+              <span class="crit-name">Alta</span>
+              <span class="crit-sub">Impacta rotina diária</span>
+            </label>
+
+            <label class="crit-card" id="card-Crítica" onclick="selecionarCriticidade('Crítica')">
+              <input type="radio" name="criticidade" value="Crítica">
+              <span class="crit-dot" style="background:#dc2626;"></span>
+              <span class="crit-name">Crítica</span>
+              <span class="crit-sub">Processo travado</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- LINHA 4: PRAZO DESEJADO -->
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="dataFim">
+              Prazo Desejado (Data limite sugerida)
+            </label>
+            <span class="form-hint">Opcional — data limite para a conclusão</span>
+            <input type="date" id="dataFim" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              Status Inicial de Entrada
+            </label>
+            <span class="form-hint">Regra Kanban: toda solicitação entra no Backlog</span>
+            <input type="text" class="form-control" value="⏳ Não iniciado (Fila do Darlan)" disabled style="background:#f1f5f9; color:#475569; font-weight:600;">
+          </div>
+        </div>
+
+        <!-- LINHA 5: QUAL O PROBLEMA -->
+        <div class="form-group">
+          <label class="form-label" for="problema">
+            Qual o problema / Diagnóstico da situação atual?
+          </label>
+          <span class="form-hint">Descreva o que acontece hoje no ERP, como o usuário opera ou mensagem de erro</span>
+          <textarea id="problema" class="form-control" placeholder="Ex: Hoje ao lançar uma nota com conta financeira diferente, o sistema permite salvar sem o flag adequado, gerando divergência no financeiro..."></textarea>
+        </div>
+
+        <!-- LINHA 6: O QUE PRECISA SER FEITO -->
+        <div class="form-group">
+          <label class="form-label" for="oQueFazer">
+            O que precisa / Queremos que seja feito?
+          </label>
+          <span class="form-hint">Descreva o resultado esperado pelo Darlan para atender esta demanda</span>
+          <textarea id="oQueFazer" class="form-control" placeholder="Ex: Amarrar conta financeira de serviço do consultivo por requisitante e bloquear alterações indevidas..."></textarea>
+        </div>
+
+        <!-- BOX WORKFLOW INFORMATIVO -->
+        <div class="workflow-info">
+          <div class="workflow-info-icon">📧</div>
+          <div class="workflow-info-text">
+            <strong>Disparo Automático de Workflow:</strong> Ao enviar, um e-mail com os detalhes desta ação será enviado automaticamente para:
+            <code>ewerton.consultoria@gmail.com</code>, <code>angelin.miranda@simprodobrasil.com.br</code> e <code>backupvilax@gmail.com</code>.
+          </div>
+        </div>
+
+        <!-- BOTÃO DE ENVIO -->
+        <button type="submit" id="btnSubmit" class="btn-submit">
+          <span>🚀 Enviar Solicitação para Ewerton / Darlan</span>
+        </button>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- MODAL DE CONFIRMAÇÃO DE SUCESSO -->
+  <div id="modalSucesso" class="success-overlay">
+    <div class="success-modal">
+      <div class="success-icon-wrap">✓</div>
+      <h2>Solicitação Aberta com Sucesso!</h2>
+      <p>
+        Sua demanda foi registrada na fila de <strong>Ewerton / Darlan</strong> e o e-mail de workflow foi disparado para a equipe de gestão.
+      </p>
+
+      <div class="protocol-box">
+        <span class="protocol-label">Protocolo da Demanda</span>
+        <span id="protocoloTexto" class="protocol-code">#ACAO-000</span>
+      </div>
+
+      <div class="success-actions">
+        <button onclick="reiniciarFormulario()" class="btn-new">
+          ➕ Abrir Nova Solicitação
+        </button>
+        <a href="index.html" class="btn-board">
+          📊 Visualizar no Painel Kanban
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    Simpro do Brasil • Sistema de Gestão de Demandas ERP Sênior • Atendimento: Ewerton / Darlan
+  </footer>
+
+  <script>
+    let criticidadeSelecionada = 'Média';
+
+    function selecionarCriticidade(val) {
+      criticidadeSelecionada = val;
+      ['Baixa', 'Média', 'Alta', 'Crítica'].forEach(c => {
+        const card = document.getElementById('card-' + c);
+        if (card) {
+          card.className = 'crit-card' + (c === val ? ' selected-' + c : '');
+          const radio = card.querySelector('input[type="radio"]');
+          if (radio) radio.checked = (c === val);
+        }
+      });
+    }
+
+    function verificarOutraArea(select) {
+      const inputOutra = document.getElementById('outraArea');
+      if (select.value === 'Outro') {
+        inputOutra.style.display = 'block';
+        inputOutra.focus();
+        inputOutra.required = true;
+      } else {
+        inputOutra.style.display = 'none';
+        inputOutra.required = false;
+      }
+    }
+
+    async function enviarSolicitacao(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ Registrando solicitação e enviando e-mails...</span>';
+
+      const selectArea = document.getElementById('area');
+      const areaFinal = selectArea.value === 'Outro' 
+        ? document.getElementById('outraArea').value.trim() 
+        : selectArea.value;
+
+      const payload = {
+        nome: document.getElementById('nome').value.trim(),
+        solicitante: document.getElementById('solicitante').value.trim(),
+        area: areaFinal,
+        criticidade: criticidadeSelecionada,
+        dataInicio: new Date().toISOString().split('T')[0],
+        dataFim: document.getElementById('dataFim').value || '',
+        problema: document.getElementById('problema').value.trim(),
+        oQueFazer: document.getElementById('oQueFazer').value.trim(),
+        status: 'Não iniciado',
+        destinatario: 'Darlan'
+      };
+
+      try {
+        const GAS_ERP_URL = 'https://script.google.com/macros/s/AKfycbxDw8-NObFcdqhWD4JyW5mQKiED4UaUXcHTy_Ztwtjlb25vBGgiYnwuU7Fttte6pHZVtQ/exec?api=erp';
+        const resp = await fetch(GAS_ERP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'criar', payload: payload })
+        });
+
+        const data = await resp.json();
+
+        // Sincroniza também com servidor local caso esteja na rede local
+        if (window.location.hostname === 'localhost' || window.location.hostname.startsWith('192.168.')) {
+          fetch('/api/acoes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }).catch(() => {});
+        }
+
+        if (data.success && data.data) {
+          document.getElementById('protocoloTexto').textContent = '#' + data.data.id;
+          document.getElementById('modalSucesso').style.display = 'flex';
+        } else {
+          alert('Erro ao registrar solicitação: ' + (data.error || 'Erro desconhecido.'));
+          btn.disabled = false;
+          btn.innerHTML = '<span>🚀 Enviar Solicitação para Ewerton / Darlan</span>';
+        }
+      } catch (err) {
+        alert('Erro de comunicação com o servidor: ' + err.message);
+        btn.disabled = false;
+        btn.innerHTML = '<span>🚀 Enviar Solicitação para Ewerton / Darlan</span>';
+      }
+    }
+
+    function reiniciarFormulario() {
+      document.getElementById('formSolicitacao').reset();
+      selecionarCriticidade('Média');
+      document.getElementById('outraArea').style.display = 'none';
+      document.getElementById('modalSucesso').style.display = 'none';
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = false;
+      btn.innerHTML = '<span>🚀 Enviar Solicitação para Ewerton / Darlan</span>';
+      document.getElementById('solicitante').focus();
+    }
+  </script>
+</body>
+</html>

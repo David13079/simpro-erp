@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" fill="none">
+  <!-- Sênior Chevron Icon -->
+  <path d="M12 8L24 20L12 32L6 26L13 20L6 14L12 8Z" fill="#00A859"/>
+  <path d="M22 8L34 20L22 32L16 26L23 20L16 14L22 8Z" fill="#008040"/>
+  <!-- "senior" typography -->
+  <text x="42" y="27" font-family="'Inter', -apple-system, sans-serif" font-size="22" font-weight="800" fill="#00A859" letter-spacing="-0.5">senior</text>
+</svg>

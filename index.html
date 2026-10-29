@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Ações ERP Sênior | Consultor Ewerton</title>
+  <meta name="description" content="Painel executivo minimalista em formato Kanban e Apresentação de Slides para controle das ações do consultor interno ERP Sênior.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-light">
+
+  <!-- CABEÇALHO EXECUTIVO SENIOR -->
+  <header class="app-header" id="main-header">
+    <div class="brand-section">
+      <img src="logo-simpro.png" alt="Simpro Industrial" class="brand-logo-img" id="corp-logo">
+      <div class="brand-divider"></div>
+      <div class="brand-text-block">
+        <h1>
+          Painel de Ações ERP
+          <span class="brand-badge-senior">Sênior Sistemas</span>
+        </h1>
+        <div class="brand-subtitle">
+          Plataforma Simpro | Atendimento ERP: <strong>Darlan</strong> • Gestão & Workflow: <strong>Ewerton / Angelin / Vilax</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELETOR DE VISÕES MINIMALISTA -->
+    <nav class="view-tabs" role="tablist" aria-label="Navegação de Visões">
+      <button class="tab-btn active" id="tab-kanban" data-view="view-kanban" role="tab" aria-selected="true">
+        <span>📌</span> Kanban
+      </button>
+      <button class="tab-btn" id="tab-slides" data-view="view-slides" role="tab" aria-selected="false">
+        <span>🖥️</span> Modo Slides
+      </button>
+      <button class="tab-btn" id="tab-queue" data-view="view-queue" role="tab" aria-selected="false">
+        <span>📋</span> Fila Gerencial
+      </button>
+      <button class="tab-btn" id="tab-analytics" data-view="view-analytics" role="tab" aria-selected="false">
+        <span>📊</span> Indicadores
+      </button>
+      <a href="solicitar.html" target="_blank" class="tab-btn" style="text-decoration:none; color: var(--senior-green-dark); font-weight:700;">
+        <span>📨</span> Portal de Solicitações
+      </a>
+    </nav>
+
+    <!-- AÇÕES RÁPIDAS -->
+    <div class="header-actions">
+      <a href="treinamento.html" class="btn btn-outline" title="Apresentação de Treinamento e Guia de Uso">
+        <span>🎓</span> Treinamento
+      </a>
+      <button class="btn btn-outline" id="btn-export-json" title="Exportar dados reais em JSON">
+        <span>📤</span> Exportar
+      </button>
+      <button class="btn btn-outline btn-icon" id="btn-toggle-theme" title="Alternar tema claro / escuro">
+        <span id="theme-icon">🌓</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- FAIXA DE INDICADORES RÁPIDOS (MINIMALISTA) -->
+  <section class="kpi-strip" id="kpi-summary-strip" aria-label="Resumo de Indicadores">
+    <div class="kpi-card kpi-total">
+      <span class="kpi-label">Total de Demandas</span>
+      <div class="kpi-value-row">
+        <span class="kpi-value" id="kpi-total-val">0</span>
+        <span class="kpi-subtext">registradas</span>
+      </div>
+    </div>
+    <div class="kpi-card kpi-nao-iniciado">
+      <span class="kpi-label">Backlog (Não iniciado)</span>
+      <div class="kpi-value-row">
+        <span class="kpi-value" id="kpi-nao-iniciado-val">0</span>
+        <span class="kpi-subtext">na fila de espera</span>
+      </div>
+    </div>
+    <div class="kpi-card kpi-em-andamento">
+      <span class="kpi-label">Em Andamento</span>
+      <div class="kpi-value-row">
+        <span class="kpi-value" id="kpi-em-andamento-val">0</span>
+        <span class="kpi-subtext">em execução ativa</span>
+      </div>
+    </div>
+    <div class="kpi-card kpi-feito">
+      <span class="kpi-label">Concluídas (Feito)</span>
+      <div class="kpi-value-row">
+        <span class="kpi-value" id="kpi-feito-val">0</span>
+        <span class="kpi-subtext" id="kpi-taxa-conclusao">0% concluído</span>
+      </div>
+    </div>
+    <div class="kpi-card kpi-atraso">
+      <span class="kpi-label">Prazos em Alerta</span>
+      <div class="kpi-value-row">
+        <span class="kpi-value" id="kpi-atraso-val">0</span>
+        <span class="kpi-subtext" id="kpi-atraso-desc">em dia</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÁREA PRINCIPAL -->
+  <main class="app-main">
+
+    <!-- ====================================================================
+         VISÃO 1: KANBAN BOARD (FLUXO ESTRITO: INSERIR APENAS NO BACKLOG)
+         ==================================================================== -->
+    <section class="view-section active-view" id="view-kanban" role="tabpanel">
+      <!-- Barra Rápida de Governança -->
+      <div class="kanban-action-bar">
+        <div class="action-bar-left">
+          <span style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">Fluxo Kanban de Consultoria ERP</span>
+          <span style="font-size: 0.82rem; color: var(--text-muted);">
+            • Novas demandas entram exclusivamente no <strong>Backlog (Não iniciado)</strong>. O avanço para <em>Em andamento</em> e <em>Feito</em> é realizado por arrasto.
+          </span>
+        </div>
+        <div style="display: flex; gap: 0.6rem;">
+          <button class="btn btn-senior" id="btn-insert-kanban-quick">
+            <span>➕</span> Inserir Demanda no Backlog
+          </button>
+        </div>
+      </div>
+
+      <div class="kanban-board" id="kanban-board-container">
+        <!-- Coluna 1: Não iniciado (Backlog - Única com permissão de criação) -->
+        <div class="kanban-col col-nao-iniciado" data-status="Não iniciado">
+          <div class="col-header">
+            <div class="col-title-group">
+              <span class="col-indicator"></span>
+              <h2 class="col-title">Não iniciado (Backlog)</h2>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="col-counter" id="counter-nao-iniciado">0</span>
+              <button class="btn-col-add-backlog" id="btn-add-backlog-header" title="Inserir nova demanda no Backlog">➕</button>
+            </div>
+          </div>
+          <div class="cards-container" id="cards-nao-iniciado" data-status="Não iniciado"></div>
+        </div>
+
+        <!-- Coluna 2: Em andamento (WIP - Sem botão de criação, apenas arrasto) -->
+        <div class="kanban-col col-em-andamento" data-status="Em andamento">
+          <div class="col-header">
+            <div class="col-title-group">
+              <span class="col-indicator"></span>
+              <h2 class="col-title">Em andamento</h2>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="col-counter" id="counter-em-andamento">0</span>
+              <span class="drag-hint-badge" title="Demandas nesta coluna devem ser arrastadas a partir do Backlog">Arraste para cá</span>
+            </div>
+          </div>
+          <div class="cards-container" id="cards-em-andamento" data-status="Em andamento"></div>
+        </div>
+
+        <!-- Coluna 3: Feito (Concluído - Sem botão de criação, apenas arrasto) -->
+        <div class="kanban-col col-feito" data-status="Feito">
+          <div class="col-header">
+            <div class="col-title-group">
+              <span class="col-indicator"></span>
+              <h2 class="col-title">Feito</h2>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="col-counter" id="counter-feito">0</span>
+              <span class="drag-hint-badge" title="Demandas finalizadas devem ser arrastadas para cá">Arraste para cá</span>
+            </div>
+          </div>
+          <div class="cards-container" id="cards-feito" data-status="Feito"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VISÃO 2: MODO APRESENTAÇÃO / SLIDE FRAME MINIMALISTA SÊNIOR
+         ==================================================================== -->
+    <section class="view-section" id="view-slides" role="tabpanel">
+      <div class="slide-presentation-wrapper" id="slide-wrapper">
+        
+        <!-- Toolbar de Controles do Slide -->
+        <div class="slide-control-toolbar" id="slide-toolbar">
+          <div class="slide-nav-group">
+            <button class="btn btn-outline" id="btn-slide-prev" title="Slide Anterior (Atalho: Seta Esquerda)">
+              <span>◀</span> Anterior
+            </button>
+            <span class="slide-counter-badge" id="slide-current-counter">Slide 0 de 0</span>
+            <button class="btn btn-outline" id="btn-slide-next" title="Próximo Slide (Atalho: Seta Direita)">
+              Próximo <span>▶</span>
+            </button>
+          </div>
+
+          <div class="slide-nav-group">
+            <button class="btn btn-senior" id="btn-slide-new-demand" title="Inserir nova demanda no Backlog">
+              <span>➕</span> Inserir Demanda
+            </button>
+            <button class="btn btn-outline" id="btn-slide-fullscreen" title="Apresentar em Tela Cheia">
+              <span>⛶</span> Tela Cheia
+            </button>
+            <button class="btn btn-outline" id="btn-slide-edit" title="Editar dados desta ação">
+              <span>✏️</span> Editar Ação
+            </button>
+          </div>
+        </div>
+
+        <!-- FRAME PADRÃO DO SLIDE (RATIO 16:9 WIDESCREEN MINIMALISTA) -->
+        <div class="slide-frame-container" id="slide-frame-viewport">
+          <!-- Slide Header -->
+          <div class="slide-frame-header">
+            <div class="slide-header-left">
+              <img src="logo-simpro.png" alt="Simpro Industrial" class="slide-corp-logo">
+              <div class="slide-header-titles">
+                <span class="slide-header-tag">Ação de Consultoria ERP Sênior | Simpro</span>
+                <span class="slide-header-sub">Plataforma Simpro de Gestão & Eficiência</span>
+              </div>
+            </div>
+            <div class="slide-header-status-badge status-pill-nao-iniciado" id="slide-status-pill">
+              ● Não iniciado
+            </div>
+          </div>
+
+          <!-- Nome da Ação (Título H1 em Destaque) -->
+          <div class="slide-action-title-block">
+            <h1 class="slide-action-name" id="slide-action-name">Selecione uma ação</h1>
+          </div>
+
+          <!-- Moldura de Metadados (Frame Grid Minimalista) -->
+          <div class="slide-meta-grid">
+            <div class="meta-item">
+              <span class="meta-item-label">👤 Solicitante</span>
+              <span class="meta-item-value" id="slide-solicitante">-</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-item-label">🏢 Área / Departamento</span>
+              <span class="meta-item-value" id="slide-area">-</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-item-label">⚡ Criticidade / Prioridade</span>
+              <span class="meta-item-value" id="slide-criticidade">-</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-item-label">📅 Data Início</span>
+              <span class="meta-item-value" id="slide-data-inicio">-</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-item-label">🏁 Data Fim (Prazo)</span>
+              <span class="meta-item-value" id="slide-data-fim">-</span>
+            </div>
+          </div>
+
+          <!-- Conteúdo Principal: 2 Blocos Estratégicos -->
+          <div class="slide-content-blocks">
+            <!-- Bloco 1: Qual o problema -->
+            <div class="slide-block-card block-problem">
+              <div class="block-title-row">
+                <span class="block-icon">⚠️</span>
+                <h3 class="block-title">Qual o problema? (Diagnóstico & Impacto)</h3>
+              </div>
+              <div class="block-body-text" id="slide-problema-text">
+                Nenhum dado informado.
+              </div>
+            </div>
+
+            <!-- Bloco 2: O que precisa / queremos que seja feito -->
+            <div class="slide-block-card block-solution">
+              <div class="block-title-row">
+                <span class="block-icon">🎯</span>
+                <h3 class="block-title">O que precisa / queremos que seja feito? (Escopo da Entrega)</h3>
+              </div>
+              <div class="block-body-text" id="slide-oque-fazer-text">
+                Nenhum dado informado.
+              </div>
+            </div>
+          </div>
+
+          <!-- Rodapé do Slide -->
+          <div class="slide-frame-footer">
+            <div class="slide-footer-tags">
+              <span>Consultor Responsável: <strong>Ewerton</strong></span>
+              <span>•</span>
+              <span id="slide-timing-badge">Prazo: Em dia</span>
+            </div>
+            <div id="slide-footer-date">ERP Sênior • Governança & Eficiência</div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VISÃO 3: FILA GERENCIAL (TABELA EXECUTIVA)
+         ==================================================================== -->
+    <section class="view-section" id="view-queue" role="tabpanel">
+      <!-- Barra de Filtros e Busca -->
+      <div class="queue-controls-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon-pos">🔍</span>
+          <input type="text" class="search-input" id="queue-search-input" placeholder="Buscar demanda, problema, solicitante ou área...">
+        </div>
+
+        <div class="filter-selects">
+          <select class="filter-select" id="filter-status">
+            <option value="">Todos os Status</option>
+            <option value="Não iniciado">Não iniciado (Backlog)</option>
+            <option value="Em andamento">Em andamento</option>
+            <option value="Feito">Feito</option>
+          </select>
+
+          <select class="filter-select" id="filter-criticidade">
+            <option value="">Todas as Criticidades</option>
+            <option value="Crítica">Crítica</option>
+            <option value="Alta">Alta</option>
+            <option value="Média">Média</option>
+            <option value="Baixa">Baixa</option>
+          </select>
+
+          <select class="filter-select" id="filter-area">
+            <option value="">Todas as Áreas</option>
+          </select>
+
+          <button class="btn btn-senior" id="btn-insert-queue-top">
+            <span>➕</span> Inserir Demanda
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabela da Fila -->
+      <div class="queue-table-container">
+        <table class="queue-table" id="queue-table-el">
+          <thead>
+            <tr>
+              <th style="width: 50px;">Fila</th>
+              <th>Nome da Ação</th>
+              <th>Área / Depto</th>
+              <th>Solicitante</th>
+              <th>Criticidade</th>
+              <th>Status</th>
+              <th>Início</th>
+              <th>Fim (Prazo)</th>
+              <th>Situação / SLA</th>
+              <th style="text-align: right;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="queue-table-body">
+            <!-- Linhas geradas dinamicamente -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VISÃO 4: INDICADORES & ANALYTICS
+         ==================================================================== -->
+    <section class="view-section" id="view-analytics" role="tabpanel">
+      <div class="analytics-grid">
+        <!-- Gráfico 1: Pipeline de Status -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3 class="chart-title">Distribuição por Status de Execução</h3>
+          </div>
+          <div class="chart-canvas-wrap" id="chart-status-wrap">
+            <canvas id="chart-status" width="400" height="240"></canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico 2: Matriz de Criticidade -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3 class="chart-title">Demandas por Nível de Criticidade</h3>
+          </div>
+          <div class="chart-canvas-wrap" id="chart-criticidade-wrap">
+            <canvas id="chart-criticidade" width="400" height="240"></canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico 3: Demandas por Departamento -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3 class="chart-title">Ações por Área / Departamento Solicitante</h3>
+          </div>
+          <div class="chart-canvas-wrap" id="chart-area-wrap">
+            <canvas id="chart-area" width="400" height="240"></canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico 4: Cumprimento de Prazos -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3 class="chart-title">Monitoramento de Prazos & Entregas</h3>
+          </div>
+          <div class="chart-canvas-wrap" id="chart-prazo-wrap">
+            <canvas id="chart-prazo" width="400" height="240"></canvas>
+          </div>
+        </div>
+
+        <!-- PAINEL EXECUTIVO: RELATÓRIO MENSAL DE INDICADORES (DOUGLAS E FEDERIGO) -->
+        <div class="monthly-report-card">
+          <div class="monthly-report-header">
+            <div>
+              <span class="monthly-badge">📅 Fechamento Executivo Mensal</span>
+              <h3 class="monthly-title">Relatório Consolidado de Indicadores ERP Sênior</h3>
+              <p class="monthly-subtitle">
+                Compilação executiva mensal mostrando total de ações abertas, em andamento e concluídas, matriz de criticidade e distribuição por departamento.<br>
+                <strong>Destinatários Oficiais:</strong> <code>douglas.araujo@simprodobrasil.com.br</code> e <code>federigo.daub@simprodobrasil.com.br</code>
+              </p>
+            </div>
+            <div class="monthly-actions">
+              <button class="btn btn-outline" id="btn-preview-relatorio-mensal" onclick="abrirPreviaRelatorioMensal()">
+                👁️ Prévia do E-mail
+              </button>
+              <button class="btn btn-senior" id="btn-disparar-relatorio-mensal" onclick="dispararRelatorioMensalAgora()">
+                🚀 Disparar Relatório Mensal Agora
+              </button>
+            </div>
+          </div>
+          <div class="monthly-info-footer" id="monthly-last-sent-info">
+            <span>⏳ <em>Disparo automático programado: último dia de cada mês às 18:00.</em></span>
+            <button class="btn btn-sm btn-outline" onclick="abrirHistoricoEmails()">
+              📧 Ver Histórico de E-mails
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VISÃO 5: INSERIR DEMANDA DIRETO NA TELA (SEMPRE ENTRA NO BACKLOG)
+         ==================================================================== -->
+    <section class="view-section" id="view-create" role="tabpanel">
+      <div class="create-demand-container">
+        <div class="create-header-card">
+          <div>
+            <h2 class="create-title">➕ Inserir Demanda no Backlog do Consultor ERP</h2>
+            <p class="create-subtitle">
+              Todas as novas demandas são registradas no <strong>Backlog (Não iniciado)</strong> com direcionamento ao consultor <strong>Darlan</strong>. Ao registrar, um e-mail de workflow é disparado para <code>ewerton.consultoria@gmail.com</code>, <code>angelin.miranda@simprodobrasil.com.br</code> e <code>backupvilax@gmail.com</code>.
+            </p>
+          </div>
+          <span class="badge-backlog-fixed">Entrada Obrigatória: Backlog</span>
+        </div>
+
+        <form id="form-direct-create" class="create-form-grid" novalidate>
+          <!-- Nome da Ação -->
+          <div class="form-group full-width">
+            <label class="form-label" for="direct-nome">
+              🏷️ Nome ação: <span class="req">*</span>
+            </label>
+            <input type="text" class="form-control form-control-lg" id="direct-nome" placeholder="Ex: Ajuste de parametrização da tela de conciliação fiscal" required>
+          </div>
+
+          <!-- Metadados da Ação -->
+          <div class="form-group">
+            <label class="form-label" for="direct-data-inicio">📅 data início:</label>
+            <input type="date" class="form-control" id="direct-data-inicio">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="direct-data-fim">🏁 Data fim (Prazo):</label>
+            <input type="date" class="form-control" id="direct-data-fim">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="direct-criticidade">⚡ criticidade/prioridade:</label>
+            <select class="form-control" id="direct-criticidade">
+              <option value="Crítica">🔴 Crítica</option>
+              <option value="Alta">🟠 Alta</option>
+              <option value="Média" selected>🟡 Média</option>
+              <option value="Baixa">🔵 Baixa</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="direct-area">
+              🏢 área/departamento: <span class="req">*</span>
+            </label>
+            <input type="text" class="form-control" id="direct-area" placeholder="Ex: PCP, Produção, Compras, Fiscal..." required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="direct-solicitante">
+              👤 Solicitante: <span class="req">*</span>
+            </label>
+            <input type="text" class="form-control" id="direct-solicitante" placeholder="Ex: Gestor PCP, Diretor..." required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">📌 Status inicial da demanda:</label>
+            <div class="status-locked-display">
+              <span class="status-dot-backlog"></span>
+              <strong>Não iniciado (Backlog)</strong>
+              <small style="color: var(--text-muted); margin-left: 0.5rem;">[Fixo para novas ações]</small>
+            </div>
+          </div>
+
+          <!-- Qual o problema -->
+          <div class="form-group full-width">
+            <label class="form-label" for="direct-problema">
+              ⚠️ qual o problema: <span class="req">*</span>
+            </label>
+            <textarea class="form-control" id="direct-problema" rows="4" placeholder="Descreva o problema, o gargalo atual no ERP ou o impacto operacional gerado..." required></textarea>
+          </div>
+
+          <!-- O que precisa / queremos que seja feito -->
+          <div class="form-group full-width">
+            <label class="form-label" for="direct-oque-fazer">
+              🎯 o que precisar/queremos que seja feito: <span class="req">*</span>
+            </label>
+            <textarea class="form-control" id="direct-oque-fazer" rows="4" placeholder="Descreva o escopo exato que o consultor interno Ewerton deve realizar (parametrizações, ajustes de banco, telas, regras)..." required></textarea>
+          </div>
+
+          <div class="create-footer-actions full-width">
+            <button type="reset" class="btn btn-outline">Limpar Formulário</button>
+            <button type="submit" class="btn btn-senior btn-lg">
+              <span>💾</span> Salvar e Inserir no Backlog
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       MODAL DE EDIÇÃO DE AÇÃO (PARA ATUALIZAR DADOS OU STATUS DE DEMANDAS EXISTENTES)
+       ==================================================================== -->
+  <div class="modal-backdrop" id="modal-action-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-action-title">Editar Demanda ERP</h2>
+        <button class="btn-close-modal" id="btn-close-modal-action" title="Fechar modal">&times;</button>
+      </div>
+      <form id="form-action" novalidate>
+        <input type="hidden" id="action-id" value="">
+        <div class="modal-body">
+          <!-- Nome da Ação -->
+          <div class="form-group">
+            <label class="form-label" for="action-nome">Nome da Ação <span class="req">*</span></label>
+            <input type="text" class="form-control" id="action-nome" placeholder="Ex: Ajuste de conciliação fiscal" required>
+          </div>
+
+          <!-- Linha 1: Datas e Status -->
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label" for="action-data-inicio">Data Início</label>
+              <input type="date" class="form-control" id="action-data-inicio">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="action-data-fim">Data Fim (Prazo)</label>
+              <input type="date" class="form-control" id="action-data-fim">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="action-status">Status Atual</label>
+              <select class="form-control" id="action-status">
+                <option value="Não iniciado">Não iniciado (Backlog)</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Feito">Feito</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Linha 2: Criticidade, Área e Solicitante -->
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label" for="action-criticidade">Criticidade / Prioridade</label>
+              <select class="form-control" id="action-criticidade">
+                <option value="Crítica">Crítica</option>
+                <option value="Alta">Alta</option>
+                <option value="Média" selected>Média</option>
+                <option value="Baixa">Baixa</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="action-area">Área / Departamento <span class="req">*</span></label>
+              <input type="text" class="form-control" id="action-area" placeholder="Ex: PCP, Produção..." required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="action-solicitante">Solicitante <span class="req">*</span></label>
+              <input type="text" class="form-control" id="action-solicitante" placeholder="Ex: Gestor PCP..." required>
+            </div>
+          </div>
+
+          <!-- Qual o problema -->
+          <div class="form-group">
+            <label class="form-label" for="action-problema">Qual o problema? <span class="req">*</span></label>
+            <textarea class="form-control" id="action-problema" placeholder="Descreva o problema..." required></textarea>
+          </div>
+
+          <!-- O que precisa / queremos que seja feito -->
+          <div class="form-group">
+            <label class="form-label" for="action-oque-fazer">O que precisa / queremos que seja feito? <span class="req">*</span></label>
+            <textarea class="form-control" id="action-oque-fazer" placeholder="Descreva o que o consultor deve realizar..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-cancel-modal-action">Cancelar</button>
+          <button type="submit" class="btn btn-senior" id="btn-save-action">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DE PRÉVIA DO RELATÓRIO MENSAL (DOUGLAS E FEDERIGO) -->
+  <div class="modal-backdrop" id="modal-preview-relatorio">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h2 class="modal-title">📊 Prévia do Relatório Mensal de Indicadores</h2>
+        <button class="btn-close-modal" onclick="fecharPreviaRelatorio()" title="Fechar">&times;</button>
+      </div>
+      <div class="modal-body" style="max-height: 70vh; overflow-y: auto; padding: 1.5rem; background: #f1f5f9;">
+        <div id="preview-relatorio-container">
+          <div style="text-align:center; padding:2rem; color:#64748b;">
+            <span>Carregando dados consolidados...</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="fecharPreviaRelatorio()">Fechar</button>
+        <button type="button" class="btn btn-senior" id="btn-confirmar-envio-relatorio" onclick="confirmarDisparoRelatorio()">
+          🚀 Confirmar Envio para Douglas & Federigo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE HISTÓRICO DE DISPAROS DE E-MAIL -->
+  <div class="modal-backdrop" id="modal-historico-emails">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h2 class="modal-title">📧 Histórico de Disparos de E-mail (Workflow & Relatórios)</h2>
+        <button class="btn-close-modal" onclick="fecharHistoricoEmails()" title="Fechar">&times;</button>
+      </div>
+      <div class="modal-body" style="max-height: 65vh; overflow-y: auto; padding: 1.25rem;">
+        <div id="historico-emails-container">
+          <div style="text-align:center; padding:2rem; color:#64748b;">
+            Carregando histórico...
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="fecharHistoricoEmails()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST DE NOTIFICAÇÃO -->
+  <div class="toast-msg" id="toast-notification">Notificação</div>
+
+  <script src="app.js"></script>
+</body>
+</html>

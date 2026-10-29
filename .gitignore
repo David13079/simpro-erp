@@ -1,0 +1,7 @@
+node_modules/
+cloudflared.exe
+tunnel.log
+email_config.json
+email_historico.json
+disparos_email/
+iniciar.bat
